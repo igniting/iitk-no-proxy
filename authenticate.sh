@@ -14,7 +14,15 @@ login() {
   then
     msg "Trying to log in"
     status_str=$(curl ${OPTS} ${LOGIN_URL} --data "username=${username}&password=${password}")
-    #TODO: Check for credentials
+    if [[ $status_str == *"Credentials Rejected"* ]]
+    then
+      msg "Invalid credentials"
+      exit 1
+    elif [[ $status_str == *"Session Expired"* ]]
+    then
+      msg "Session Expired, creating new session."
+      sess_str=$(curl ${OPTS} ${CONNSTATUS_URL} --data "login=Log+In+Now")
+    fi
   else
     msg "Logged in"
   fi
