@@ -27,7 +27,6 @@ login() {
     msg "Logged in"
   fi
   sleep 10
-  login
 }
 
 echo -n "Username: "
@@ -35,4 +34,7 @@ read username
 echo -n "Password: "
 read -s password
 echo
-login
+
+while [[ true ]]; do
+  login
+done
